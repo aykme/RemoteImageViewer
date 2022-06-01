@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Remote Image Viewer</string>
+    <string name="image_list_fragment_label">Список картинок</string>
+    <string name="image_fullscreen_fragment_label">Картинка в полном экране</string>
+</resources>
