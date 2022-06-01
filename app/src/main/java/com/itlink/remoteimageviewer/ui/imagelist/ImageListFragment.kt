@@ -1,5 +1,6 @@
 package com.itlink.remoteimageviewer.ui.imagelist
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -30,7 +31,11 @@ class ImageListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val imageListRecyclerView = binding.imageListRecyclerView
-        imageListRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        if (isLandscapeOrientation()) {
+            imageListRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
+        } else {
+            imageListRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        }
         imageListRecyclerView.adapter = adapter
         adapter.setOnItemClickedAction {
             val actionImageListFragmentToImageFullscreenFragment =
@@ -48,5 +53,10 @@ class ImageListFragment : BaseFragment() {
         viewModel.imageListLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+    }
+
+    private fun isLandscapeOrientation(): Boolean {
+        val orientation = resources.configuration.orientation
+        return orientation == Configuration.ORIENTATION_LANDSCAPE
     }
 }
