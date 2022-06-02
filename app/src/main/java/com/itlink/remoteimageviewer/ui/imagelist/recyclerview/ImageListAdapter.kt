@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itlink.remoteimageviewer.databinding.ItemImageListBinding
 import com.itlink.remoteimageviewer.di.FragmentScope
 import com.itlink.remoteimageviewer.domain.model.Image
-import com.itlink.remoteimageviewer.util.ImageUtil
+import com.itlink.remoteimageviewer.util.bindImageView
 import javax.inject.Inject
 
 @FragmentScope
@@ -24,7 +24,7 @@ class ImageListAdapter @Inject constructor(
             image: Image,
             onItemClicked: (Image) -> Unit,
         ) {
-            ImageUtil.bindImageView(binding.itemImage, image.url)
+            binding.itemImage.bindImageView(image.url)
 
             itemView.setOnClickListener {
                 onItemClicked(image)

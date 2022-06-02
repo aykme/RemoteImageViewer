@@ -6,6 +6,7 @@ import java.net.URL
 import javax.inject.Inject
 
 val IMAGE_SERVICE_URL = URL("https://it-link.ru/test/images.txt")
+const val IMAGE_EXAMINATION = "https://encrypted-tbn0.gstatic.com/images?q=tbn:"
 
 class RemoteImageService @Inject constructor()  {
     val imageLinkList: List<String> by lazy {
@@ -26,6 +27,6 @@ class RemoteImageService @Inject constructor()  {
     }
 
     private fun isCorrectImageLink(link: String): Boolean {
-        return true
+        return link.contains(IMAGE_EXAMINATION)
     }
 }
