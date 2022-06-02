@@ -15,8 +15,8 @@ class ImageListViewModel @Inject constructor(
 
     fun refreshImageList() {
         viewModelScope.launch {
-            val imageList = fetchImageListUseCase()
-            imageListLiveData.postValue(imageList)
+                val imageList = fetchImageListUseCase()
+                imageListLiveData.postValue(imageList)
         }
     }
 }
