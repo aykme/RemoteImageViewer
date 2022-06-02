@@ -1,6 +1,8 @@
 package com.itlink.remoteimageviewer.data.remote
 
+import android.util.Log
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
 import javax.inject.Inject
@@ -15,14 +17,22 @@ class RemoteImageService @Inject constructor()  {
 
     private fun getImageLinks(): List<String> {
         val imageLinkList = mutableListOf<String>()
-        val imageLinkReader = BufferedReader(InputStreamReader(IMAGE_SERVICE_URL.openStream()))
-        var currentLink: String?
-        while ((imageLinkReader.readLine()).also { currentLink = it } != null) {
-            if (isCorrectImageLink(currentLink!!)) {
-                imageLinkList.add(currentLink!!)
+        var imageLinkReader: BufferedReader? = null
+        try {
+            imageLinkReader = BufferedReader(InputStreamReader(IMAGE_SERVICE_URL.openStream()))
+            var currentLink: String?
+            while ((imageLinkReader.readLine()).also { currentLink = it } != null) {
+                if (isCorrectImageLink(currentLink!!)) {
+                    imageLinkList.add(currentLink!!)
+                }
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.d("ImageLiseViewModel", "Ошибка соединения с сервером")
+        } finally {
+            imageLinkReader?.close()
         }
-        imageLinkReader.close()
+
         return imageLinkList.toList()
     }
 

@@ -25,7 +25,6 @@ class ImageListAdapter @Inject constructor(
             onItemClicked: (Image) -> Unit,
         ) {
             binding.itemImage.bindImageView(image.url)
-
             itemView.setOnClickListener {
                 onItemClicked(image)
             }

@@ -6,12 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.itlink.remoteimageviewer.databinding.FragmentImageListBinding
 import com.itlink.remoteimageviewer.ui.base.BaseFragment
 import com.itlink.remoteimageviewer.ui.imagelist.recyclerview.ImageListAdapter
+import java.io.IOException
 import javax.inject.Inject
 
 class ImageListFragment : BaseFragment() {
@@ -48,8 +50,16 @@ class ImageListFragment : BaseFragment() {
                     actionImageListFragmentToImageFullscreenFragment
                 )
         }
+        try {
+            viewModel.refreshImageList()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(requireContext(),
+                "",
+                Toast.LENGTH_LONG).show()
+        }
 
-        viewModel.refreshImageList()
+
         viewModel.imageListLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
